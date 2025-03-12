@@ -21,7 +21,7 @@ def main():
     Player.containers = (updateables, drawables)
     Asteroid.containers = (asteroids, updateables, drawables)
     AsteroidField.containers = (updateables)
-    Shot.containers = (updateables, drawables)
+    Shot.containers = (shots, updateables, drawables)
     asteroid_field = AsteroidField()
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
     dt = 0
@@ -37,6 +37,12 @@ def main():
             if asteroid.collision(player):
                 print ("GAME OVER DICKHEAD!")
                 sys.exit()
+        for asteroid in asteroids:
+            for shot in shots:
+                if shot.collision(asteroid):
+                    asteroid.split()
+                    shot.kill()
+        
         for drawable in drawables:
             drawable.draw(screen)
          
